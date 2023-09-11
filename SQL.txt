@@ -1,0 +1,164 @@
+Select:
+select name,city from customers;
+select country from customers; - retrieve duplicate values as well
+
+
+Distinct:
+select distinct country from customers - allow single values
+select count(distinct country) from customers  - count details
+select count(*) from (select distinct country from customers)
+select count(*) As Distinct_countries from (select distinct country from customers)
+
+Where:
+select country,name from customers where countryID=4;
+select country,name from customers where country='mexico';
+
+operators:
+=
+>
+<
+>=
+<=
+<> or !=
+BETWEEN
+LIKE
+IN
+
+AND OR NOT
+select country_name from customers where country_name='Germany' And city='Berlin'
+select country_name from customers where city='Berlin' OR city='Munchen'
+select country_name from customers where Not city='Berlin'
+select country_name from customers where country_name='Germany' And (city='Berlin' OR city='Munchen')
+select * from customers where not country_name in('Germany','USA');
+
+OrderBy
+select column1,column2 from table1 orderby column1 asc;
+select column1,column2 from table1 orderby column2 desc;
+select * from table1 orderby column1,column2;
+select * from table1 orderby column1 asc,column2 desc;
+
+Insert into
+
+values to all the columns:
+insert into table1 values('value1','value2','value3','value4');
+
+values to specific columns:
+insert into table1(column4,column5,column6) values('value1','value2','value3');
+
+Null:
+
+select country_name from customers where country_name is not null.
+
+Update:
+update customers Set country_name="india',city='chennai' where customer_name='saranya';
+
+Delete
+Delete from customers where customer_id=10;
+Delete from customers; - deletes all the records in a table
+
+Top:
+select Top 4 * from customers:
+
+select Top 25 percent * from customers;
+
+Limit:
+select * from customers LIMIT 3;
+
+Fetch first
+select * from customers Fetch first 3 rows only;
+select * from customers fetch first 5o percent rows only;
+
+ROWNUM:
+
+Select ROWNUMBER() OVER(order by salary)row_num,name,id,salary from employees ;
+
+MIN/MAX
+select MIN(salary) As employee_salary from employees;
+select MAX(salary) As employee_salary from employees;
+
+Count()
+select count(city) from customers where city='chennai'
+
+AVG()
+select avg(price) from products;
+
+SUM()
+select sum(quanity) from products;
+
+LIKE:
+select customer_name from customers where customer_name NOT LIKE 'inactive%'
+'%a% , '%a'
+
+select city from customers where city LIKE 'L_NDON';
+
+select city from customers where city LIKE '[bsp]%'; (Starts with b or s or p)
+
+select city from customers where city NOT LIKE '[bsp]% ;(Not starts with b or s or P)
+
+IN:
+select * from customers where country IN('india,'USA');
+select * from customers where country NOT IN(select country from suppliers);
+
+
+BETWEEN
+select * from customers where customer_name BETWEEN "chos" AND "ghjyu";
+
+As - temporary name for a table or column name
+
+select customername As Name from customers;
+
+Inner JOIN: Matched records
+
+select orders.orderId,orders.orderdate,customers.customer_name from orders INNER JOIN customers ON orders.customerID=customers.customerID
+
+select orders.orderId,orders.orderdate,customers.customer_name,supplier.suppliername from ((orders INNER JOIN customers ON orders.customerID=customers.customerID)
+
+                                                                                                  INNER JOIN suppliers ON orders.shipperID=supplier.shipperID)
+ 
+
+
+LEFT JOIN: - All the records from left table and matched records from right side table
+select customers.customername,customers.contactumber,orders.orderdate from customers LEFT JOIN orders ON customers.customerID=orders.customerID orderBy customers.customername;
+
+RIGHT JOIN- All the records from right side table and matched records from left side.
+select orders.orderdate,supplier.suppliername,supplier.deliverycharge from orders RIGHT JOIN supplier ON orders.orderID=supplier.orderID orderBy supplier.suppliername;
+
+FULL OUTER JOIN or FULL JOIN - All the matched records from both table and left and right table records.
+select orders.orderdate,supplier.suppliername,supplier.deliverycharge from orders FULL OUTER JOIN supplier ON orders.orderID=supplier.orderID orderBy supplier.suppliername;
+
+SELF JOIN: Table is joined with itself.
+
+UNION: -used to combine the result set of two or more select statements.select statement within union must have same number of columns.similar data types,
+same order. retrieves only distinct values.
+
+UNIONALL-retrieves duplicate values
+
+select city from customers
+UNION
+select city from suppliers
+
+select city from customers
+UNION ALL
+select city from suppliers
+
+Group By:
+Group By-groups rows that have same values into summary rows.
+used with aggregate functions count(),MAX(),MIN(),SUM(),AVG() - To group the resultset by one or more columns.
+
+select count(customerID),country from customers GROUP BY country;
+
+Having: added to SQL because where keyword cannot be used with aggregate functions
+SELECT Employees.LastName, COUNT(Orders.OrderID) AS NumberOfOrders
+FROM (Orders
+INNER JOIN Employees ON Orders.EmployeeID = Employees.EmployeeID)
+GROUP BY LastName
+HAVING COUNT(Orders.OrderID) > 10;
+
+Exists: - used to test for the existence of any record in a subquery
+
+Select * into -To copy the data from one table to another
+
+
+comments:
+-- single line comment
+/*   */  - multi line comments
